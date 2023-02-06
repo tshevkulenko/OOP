@@ -1,4 +1,5 @@
 package ru.academits.shevkulenko.main;
+
 import ru.academits.shevkulenko.range.Range;
 
 import java.util.Scanner;
