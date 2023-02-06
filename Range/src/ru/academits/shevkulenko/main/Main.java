@@ -20,7 +20,7 @@ public class Main {
         Range range2 = new Range(-5.1, 0.7);
 
         range2.setFrom(-10.3);
-        range2.setTo(-6.2);
+        range2.setTo(-0.7);
 
         System.out.print("Первый диапазон: ");
         print(range1, number);
@@ -33,7 +33,7 @@ public class Main {
         if (intersection == null) {
             System.out.println("Пересечения нет");
         } else {
-            System.out.println("Диапазон пересечения: " + intersection.toString());
+            System.out.println("Диапазон пересечения: " + intersection);
         }
 
         Range[] union = range1.getUnion(range2);
