@@ -8,7 +8,7 @@ public class Main {
     private static void print(Range range, double number) {
         System.out.printf("%s. Длина диапазона равна %f. " +
                         "Результат проверки на принадлежность диапазону введенного вещественного числа: %b%n",
-                range.toString(), range.getLength(), range.isInside(number));
+                range, range.getLength(), range.isInside(number));
     }
 
     public static void main(String[] args) {
@@ -40,7 +40,7 @@ public class Main {
         Range[] union = range1.getUnion(range2);
 
         for (Range range : union) {
-            System.out.println("Диапазон объединения: " + range.toString());
+            System.out.println("Диапазон объединения: " + range);
         }
 
         Range[] difference = range1.getDifference(range2);
@@ -49,7 +49,7 @@ public class Main {
             System.out.println("Диапазона разности нет");
         } else {
             for (Range range : difference) {
-                System.out.println("Диапазон разности: " + range.toString());
+                System.out.println("Диапазон разности: " + range);
             }
         }
     }
