@@ -1,6 +1,6 @@
-package ru.academits.shevkulenko.main;
+package ru.academits.shevkulenko.shapes.comparators;
 
-import ru.academits.shevkulenko.shapes.Shape;
+import ru.academits.shevkulenko.shapes.shapes.Shape;
 
 import java.util.Comparator;
 

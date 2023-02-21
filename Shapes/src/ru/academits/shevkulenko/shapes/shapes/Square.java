@@ -1,35 +1,39 @@
-package ru.academits.shevkulenko.shapes;
+package ru.academits.shevkulenko.shapes.shapes;
 
 public class Square implements Shape {
-    private final double length;
+    private final double sideLength;
 
-    public Square(double length) {
-        this.length = length;
+    public Square(double sideLength) {
+        this.sideLength = sideLength;
+    }
+
+    public double getSideLength() {
+        return sideLength;
     }
 
     @Override
     public double getWidth() {
-        return length;
+        return sideLength;
     }
 
     @Override
     public double getHeight() {
-        return length;
+        return sideLength;
     }
 
     @Override
     public double getArea() {
-        return Math.pow(length, 2);
+        return sideLength * sideLength;
     }
 
     @Override
     public double getPerimeter() {
-        return length * 4;
+        return 4 * sideLength;
     }
 
     @Override
     public String toString() {
-        return "Квадрат со стороной длиной " + length;
+        return "Квадрат со стороной длиной " + sideLength;
     }
 
     @Override
@@ -43,12 +47,12 @@ public class Square implements Shape {
         }
 
         Square square = (Square) o;
-        return length == square.length;
+        return sideLength == square.sideLength;
     }
 
     @Override
     public int hashCode() {
         final int prime = 37;
-        return prime + Double.hashCode(length);
+        return prime + Double.hashCode(sideLength);
     }
 }

@@ -1,4 +1,4 @@
-package ru.academits.shevkulenko.shapes;
+package ru.academits.shevkulenko.shapes.shapes;
 
 public class Triangle implements Shape {
     private final double x1;
@@ -7,6 +7,9 @@ public class Triangle implements Shape {
     private final double y1;
     private final double y2;
     private final double y3;
+    private final double side1Length;
+    private final double side2Length;
+    private final double side3Length;
 
     public Triangle(double x1, double y1, double x2, double y2, double x3, double y3) {
         this.x1 = x1;
@@ -15,22 +18,49 @@ public class Triangle implements Shape {
         this.y1 = y1;
         this.y2 = y2;
         this.y3 = y3;
+        side1Length = getCutLength(x1, y1, x2, y2);
+        side2Length = getCutLength(x2, y2, x3, y3);
+        side3Length = getCutLength(x3, y3, x1, y1);
     }
 
-    private static double getCutLength(double x1, double x2, double y1, double y2) {
+    public double getX1() {
+        return x1;
+    }
+
+    public double getY1() {
+        return y1;
+    }
+
+    public double getX2() {
+        return x2;
+    }
+
+    public double getY2() {
+        return y2;
+    }
+
+    public double getX3() {
+        return x3;
+    }
+
+    public double getY3() {
+        return y3;
+    }
+
+    public double getSide1Length() {
+        return side1Length;
+    }
+
+    public double getSide2Length() {
+        return side2Length;
+    }
+
+    public double getSide3Length() {
+        return side3Length;
+    }
+
+    private static double getCutLength(double x1, double y1, double x2, double y2) {
         return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
-    }
-
-    private double getSide1() {
-        return getCutLength(x1, x2, y1, y2);
-    }
-
-    private double getSide2() {
-        return getCutLength(x2, x3, y2, y3);
-    }
-
-    private double getSide3() {
-        return getCutLength(x3, x1, y3, y1);
     }
 
     @Override
@@ -45,19 +75,20 @@ public class Triangle implements Shape {
 
     @Override
     public double getArea() {
-        double semiPerimeter = getPerimeter() * 0.5;
-        return Math.sqrt(semiPerimeter * (semiPerimeter - getSide1()) *
-                (semiPerimeter - getSide2()) * (semiPerimeter - getSide3()));
+        double semiPerimeter = 0.5 * getPerimeter();
+        return Math.sqrt(semiPerimeter * (semiPerimeter - side1Length) *
+                (semiPerimeter - side2Length) * (semiPerimeter - side3Length));
     }
 
     @Override
     public double getPerimeter() {
-        return getSide1() + getSide2() + getSide3();
+        return side1Length + side2Length + side3Length;
     }
 
     @Override
     public String toString() {
-        return String.format("Треугольник со сторонами %.2f, %.2f и %.2f", getSide1(), getSide2(), getSide3());
+        return String.format("Треугольник с координатами: (%.2f, %.2f), (%.2f, %.2f), (%.2f, %.2f)",
+                x1, y1, x2, y2, x3, y3);
     }
 
     @Override
