@@ -10,15 +10,15 @@ public class Vector {
             throw new IllegalArgumentException("Размерность вектора должна быть больше 0");
         }
 
-        this.components = new double[n];
+        components = new double[n];
     }
 
     public Vector(Vector vector) {
-        this.components = Arrays.copyOf(vector.components, vector.components.length);
+        components = Arrays.copyOf(vector.components, vector.components.length);
     }
 
     public Vector(double[] array) {
-        this.components = Arrays.copyOf(array, array.length);
+        components = Arrays.copyOf(array, array.length);
     }
 
     public Vector(int n, double[] array) {
@@ -26,7 +26,7 @@ public class Vector {
             throw new IllegalArgumentException("Размерность вектора должна быть больше 0");
         }
 
-        this.components = Arrays.copyOf(array, n);
+        components = Arrays.copyOf(array, n);
     }
 
     public int getSize() {
@@ -50,11 +50,11 @@ public class Vector {
         int vectorSize = vector.getSize();
 
         if (getSize() < vectorSize) {
-            this.components = Arrays.copyOf(components, vectorSize);
+            components = Arrays.copyOf(components, vectorSize);
         }
 
         for (int i = 0; i < vectorSize; ++i) {
-            this.components[i] += vector.components[i];
+            components[i] += vector.components[i];
         }
     }
 
@@ -62,17 +62,17 @@ public class Vector {
         int vectorSize = vector.getSize();
 
         if (getSize() < vectorSize) {
-            this.components = Arrays.copyOf(components, vectorSize);
+            components = Arrays.copyOf(components, vectorSize);
         }
 
         for (int i = 0; i < vectorSize; ++i) {
-            this.components[i] -= vector.components[i];
+            components[i] -= vector.components[i];
         }
     }
 
     public void multiplyVectorByScalar(double scalar) {
         for (int i = 0; i < getSize(); i++) {
-            this.components[i] *= scalar;
+            components[i] *= scalar;
         }
     }
 
@@ -103,7 +103,7 @@ public class Vector {
             throw new IllegalArgumentException("Заданный индекс не существует");
         }
 
-        this.components[index] = component;
+        components[index] = component;
     }
 
     @Override
