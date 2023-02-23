@@ -83,7 +83,7 @@ public class Vector {
     public double getVectorLength() {
         double componentSquaresSum = 0;
 
-        for (double component : this.components) {
+        for (double component : components) {
             componentSquaresSum += component * component;
         }
 
@@ -118,12 +118,12 @@ public class Vector {
 
         Vector vector = (Vector) o;
 
-        if (this.getSize() != vector.getSize()) {
+        if (getSize() != vector.getSize()) {
             return false;
         }
 
         for (int i = 0; i < getSize(); i++) {
-            if (this.getComponent(i) != vector.getComponent(i)) {
+            if (getComponent(i) != vector.getComponent(i)) {
                 return false;
             }
         }
