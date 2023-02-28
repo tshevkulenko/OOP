@@ -1,4 +1,4 @@
-package ru.academits.shevkulenko.shapes.shapes;
+package ru.academits.shevkulenko.shapes;
 
 public class Triangle implements Shape {
     private final double x1;
@@ -87,7 +87,7 @@ public class Triangle implements Shape {
 
     @Override
     public String toString() {
-        return String.format("Треугольник с координатами: (%.2f, %.2f), (%.2f, %.2f), (%.2f, %.2f)",
+        return String.format("Треугольник с координатами: (%.2f; %.2f), (%.2f; %.2f), (%.2f; %.2f)",
                 x1, y1, x2, y2, x3, y3);
     }
 

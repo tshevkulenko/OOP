@@ -1,8 +1,8 @@
 package ru.academits.shevkulenko.shapes.main;
 
-import ru.academits.shevkulenko.shapes.comparators.AreaComparator;
-import ru.academits.shevkulenko.shapes.comparators.PerimeterComparator;
-import ru.academits.shevkulenko.shapes.shapes.*;
+import ru.academits.shevkulenko.shapes.*;
+import ru.academits.shevkulenko.shapes.comparators.ShapeAreaComparator;
+import ru.academits.shevkulenko.shapes.comparators.ShapePerimeterComparator;
 
 import java.util.Arrays;
 
@@ -12,7 +12,7 @@ public class Main {
             return null;
         }
 
-        Arrays.sort(shapes, new AreaComparator());
+        Arrays.sort(shapes, new ShapeAreaComparator());
         return shapes[shapes.length - 1];
     }
 
@@ -21,7 +21,7 @@ public class Main {
             return null;
         }
 
-        Arrays.sort(shapes, new PerimeterComparator());
+        Arrays.sort(shapes, new ShapePerimeterComparator());
         return shapes[shapes.length - 2];
     }
 

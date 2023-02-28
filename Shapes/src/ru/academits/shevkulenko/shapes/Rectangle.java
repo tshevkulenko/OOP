@@ -1,4 +1,4 @@
-package ru.academits.shevkulenko.shapes.shapes;
+package ru.academits.shevkulenko.shapes;
 
 public class Rectangle implements Shape {
     private final double height;
@@ -31,7 +31,7 @@ public class Rectangle implements Shape {
 
     @Override
     public String toString() {
-        return "Прямоугольник с длиной " + height + " и шириной " + width;
+        return "Прямоугольник с высотой " + height + " и шириной " + width;
     }
 
     @Override
