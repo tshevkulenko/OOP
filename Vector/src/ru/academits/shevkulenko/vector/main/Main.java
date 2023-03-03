@@ -1,4 +1,4 @@
-package ru.academits.shevkulenko.main;
+package ru.academits.shevkulenko.vector.main;
 
 import ru.academits.shevkulenko.vector.Vector;
 
@@ -17,19 +17,19 @@ public class Main {
         Vector vector4 = new Vector(5, array);
         System.out.println("Вектор 4: " + vector4 + " размерностью " + vector4.getSize());
 
-        vector3.addVector(vector4);
+        vector3.add(vector4);
         System.out.println("Обновленный вектор 3 после прибавления вектора 4: " + vector3);
 
-        vector3.subtractVector(vector4);
+        vector3.subtract(vector4);
         System.out.println("Обновленный вектор 3 после вычитания вектора 4: " + vector3);
 
-        vector3.multiplyVectorByScalar(2);
+        vector3.multiplyByScalar(2);
         System.out.println("Обновленный вектор 3 после умножения на скаляр: " + vector3);
 
-        vector3.reverseVector();
+        vector3.reverse();
         System.out.println("Обновленный вектор 3 после разворота: " + vector3);
 
-        System.out.println("Длина обновленного вектора 3: " + vector3.getVectorLength());
+        System.out.println("Длина обновленного вектора 3: " + vector3.getLength());
 
         System.out.println("Компонента вектора 3 с заданным индексом = " + vector3.getComponent(1));
 
@@ -42,12 +42,12 @@ public class Main {
         Vector vector5 = new Vector(newArray);
         System.out.println("Вектор 5: " + vector5 + " размерностью " + vector5.getSize());
 
-        Vector vector6 = Vector.sumVectors(vector3, vector5);
+        Vector vector6 = Vector.getSum(vector3, vector5);
         System.out.println("Вектор 6 - результат сложения векторов 3 и 5: " + vector6);
 
-        Vector vector7 = Vector.subtractVectors(vector3, vector5);
+        Vector vector7 = Vector.getDifference(vector3, vector5);
         System.out.println("Вектор 7 - результат вычитания векторов 3 и 5: " + vector7);
 
-        System.out.println("Скалярное произведение векторов 3 и 5: " + Vector.multiplyVectors(vector3, vector5));
+        System.out.println("Скалярное произведение векторов 3 и 5: " + Vector.getScalarProduct(vector3, vector5));
     }
 }
