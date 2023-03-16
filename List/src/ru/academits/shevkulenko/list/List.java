@@ -2,13 +2,13 @@ package ru.academits.shevkulenko.list;
 
 public class List<T> {
     private ListItem<T> head;
-    private int count;
+    private int size;
 
     public List() {
     }
 
     public int getSize() {
-        return count;
+        return size;
     }
 
     public T getFirstItem() {
@@ -16,9 +16,9 @@ public class List<T> {
     }
 
     public T getByIndex(int index) {
-        if (index >= count || index < 0) {
+        if (index >= size || index < 0) {
             throw new IndexOutOfBoundsException("Не существует элемента с индексом" + index +
-                    ". Заданный индекс должен быть в пределах от 0 до " + (count - 1));
+                    ". Заданный индекс должен быть в пределах от 0 до " + (size - 1));
         }
 
         if (index == 0) {
@@ -40,9 +40,9 @@ public class List<T> {
     }
 
     public T changeByIndex(int index, T item) {
-        if (index >= count || index < 0) {
+        if (index >= size || index < 0) {
             throw new IndexOutOfBoundsException("Не существует элемента с индексом" + index +
-                    ". Заданный индекс должен быть в пределах от 0 до " + (count - 1));
+                    ". Заданный индекс должен быть в пределах от 0 до " + (size - 1));
         }
 
         int counter = 0;
@@ -61,15 +61,15 @@ public class List<T> {
     }
 
     public T removeByIndex(int index) {
-        if (index >= count || index < 0) {
+        if (index >= size || index < 0) {
             throw new IndexOutOfBoundsException("Не существует элемента с индексом" + index +
-                    ". Заданный индекс должен быть в пределах от 0 до " + (count - 1));
+                    ". Заданный индекс должен быть в пределах от 0 до " + (size - 1));
         }
 
         if (index == 0) {
             T removedItem = head.getValue();
             head = head.getNext();
-            count--;
+            size--;
             return removedItem;
         }
 
@@ -80,7 +80,7 @@ public class List<T> {
             if (counter == index) {
                 removedItem = p.getValue();
                 prev.setNext(p.getNext());
-                count--;
+                size--;
                 break;
             } else {
                 counter++;
@@ -92,13 +92,13 @@ public class List<T> {
 
     public void addFirstItem(T item) {
         head = new ListItem<>(item, head);
-        count++;
+        size++;
     }
 
     public void addByIndex(int index, T item) {
-        if (index >= count || index < 0) {
+        if (index >= size || index < 0) {
             throw new IndexOutOfBoundsException("Не существует элемента с индексом" + index +
-                    ". Заданный индекс должен быть в пределах от 0 до " + (count - 1));
+                    ". Заданный индекс должен быть в пределах от 0 до " + (size - 1));
         }
 
         if (index == 0) {
@@ -111,7 +111,7 @@ public class List<T> {
             if (counter == index) {
                 p = new ListItem<>(item, p);
                 prev.setNext(p);
-                count++;
+                size++;
                 break;
             } else {
                 counter++;
@@ -131,7 +131,7 @@ public class List<T> {
                     prev.setNext(p);
                 }
 
-                count--;
+                size--;
                 break;
             }
         }
@@ -142,7 +142,7 @@ public class List<T> {
     public T removeFirstItem() {
         T removedItem = head.getValue();
         head = head.getNext();
-        count--;
+        size--;
         return removedItem;
     }
 
