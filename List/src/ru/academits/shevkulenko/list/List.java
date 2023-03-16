@@ -119,11 +119,11 @@ public class List<T> {
         }
     }
 
-    public boolean remove(T data) {
+    public boolean remove(T item) {
         boolean isDeleted = false;
 
         for (ListItem<T> p = head, prev = null; p != null; prev = p, p = p.getNext()) {
-            if (p.getValue().equals(data)) {
+            if (p.getValue().equals(item)) {
                 isDeleted = true;
                 p = p.getNext();
 
