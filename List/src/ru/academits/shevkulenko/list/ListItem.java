@@ -8,8 +8,8 @@ public class ListItem<T> {
         this.value = value;
     }
 
-    public ListItem(T data, ListItem<T> next) {
-        this.value = data;
+    public ListItem(T value, ListItem<T> next) {
+        this.value = value;
         this.next = next;
     }
 
