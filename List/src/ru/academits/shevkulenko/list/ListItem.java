@@ -1,6 +1,6 @@
 package ru.academits.shevkulenko.list;
 
-public class ListItem<T> {
+class ListItem<T> {
     private T value;
     private ListItem<T> next;
 

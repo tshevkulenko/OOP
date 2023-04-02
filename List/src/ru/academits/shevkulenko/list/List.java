@@ -4,158 +4,122 @@ public class List<T> {
     private ListItem<T> head;
     private int size;
 
-    public List() {
-    }
-
     public int getSize() {
         return size;
     }
 
-    public T getFirstItem() {
+    public T getFirst() {
+        checkEmptiness();
         return head.getValue();
     }
 
     public T getByIndex(int index) {
-        if (index >= size || index < 0) {
-            throw new IndexOutOfBoundsException("Не существует элемента с индексом" + index +
-                    ". Заданный индекс должен быть в пределах от 0 до " + (size - 1));
-        }
+        checkIndex(index);
 
         if (index == 0) {
-            return getFirstItem();
+            return getFirst();
         }
 
-        int counter = 0;
-        T item = head.getValue();
-        for (ListItem<T> p = head; p != null; p = p.getNext()) {
-            if (counter == index) {
-                item = p.getValue();
-                break;
-            } else {
-                counter++;
-            }
-        }
-
-        return item;
+        ListItem<T> item = findByIndex(index);
+        return item.getValue();
     }
 
-    public T changeByIndex(int index, T item) {
-        if (index >= size || index < 0) {
-            throw new IndexOutOfBoundsException("Не существует элемента с индексом" + index +
-                    ". Заданный индекс должен быть в пределах от 0 до " + (size - 1));
-        }
+    public T setByIndex(int index, T value) {
+        checkIndex(index);
 
-        int counter = 0;
-        T changedItem = head.getValue();
+        ListItem<T> item = findByIndex(index);
+        T oldValue = item.getValue();
+        item.setValue(value);
 
-        for (ListItem<T> p = head; p != null; p = p.getNext()) {
-            if (counter == index) {
-                changedItem = p.getValue();
-                p.setValue(item);
-                break;
-            } else {
-                counter++;
-            }
-        }
-        return changedItem;
+        return oldValue;
     }
 
     public T removeByIndex(int index) {
-        if (index >= size || index < 0) {
-            throw new IndexOutOfBoundsException("Не существует элемента с индексом" + index +
-                    ". Заданный индекс должен быть в пределах от 0 до " + (size - 1));
-        }
+        checkIndex(index);
 
         if (index == 0) {
-            T removedItem = head.getValue();
+            T removedValue = head.getValue();
             head = head.getNext();
             size--;
-            return removedItem;
+            return removedValue;
         }
 
-        int counter = 0;
-        T removedItem = null;
+        ListItem<T> previousItem = findByIndex(index - 1);
+        ListItem<T> currentItem = findByIndex(index);
+        T removedValue = currentItem.getValue();
+        previousItem.setNext(currentItem.getNext());
+        size--;
 
-        for (ListItem<T> p = head.getNext(), prev = head; p != null; prev = p, p = p.getNext()) {
-            if (counter == index) {
-                removedItem = p.getValue();
-                prev.setNext(p.getNext());
-                size--;
-                break;
-            } else {
-                counter++;
-            }
-        }
-
-        return removedItem;
+        return removedValue;
     }
 
-    public void addFirstItem(T item) {
-        head = new ListItem<>(item, head);
+    public void addFirst(T value) {
+        head = new ListItem<>(value, head);
         size++;
     }
 
-    public void addByIndex(int index, T item) {
-        if (index >= size || index < 0) {
-            throw new IndexOutOfBoundsException("Не существует элемента с индексом" + index +
-                    ". Заданный индекс должен быть в пределах от 0 до " + (size - 1));
-        }
+    public void addByIndex(int index, T value) {
+        checkIndex(index);
 
         if (index == 0) {
-            addFirstItem(item);
+            addFirst(value);
         }
 
-        int counter = 0;
-
-        for (ListItem<T> p = head.getNext(), prev = head; prev != null; prev = p, p = p.getNext()) {
-            if (counter == index) {
-                p = new ListItem<>(item, p);
-                prev.setNext(p);
-                size++;
-                break;
-            } else {
-                counter++;
-            }
-        }
+        ListItem<T> currentItem = findByIndex(index);
+        ListItem<T> previousItem = findByIndex(index - 1);
+        ListItem<T> newItem = new ListItem<>(value, currentItem);
+        previousItem.setNext(newItem);
+        size++;
     }
 
-    public boolean remove(T item) {
-        boolean isDeleted = false;
+    public boolean remove(T value) {
+        if (value == null) {
+            return false;
+        }
 
-        for (ListItem<T> p = head, prev = null; p != null; prev = p, p = p.getNext()) {
-            if (p.getValue().equals(item)) {
-                isDeleted = true;
-                p = p.getNext();
+        if (head.equals(value)) {
+            head = head.getNext();
+            size--;
+            return true;
+        }
 
-                if (prev != null) {
-                    prev.setNext(p);
+        for (ListItem<T> currentItem = head, previousItem = null; currentItem != null; previousItem = currentItem, currentItem = currentItem.getNext()) {
+            if (currentItem.getValue().equals(value)) {
+                currentItem = currentItem.getNext();
+
+                if (previousItem != null) {
+                    previousItem.setNext(currentItem);
                 }
 
                 size--;
-                break;
+                return true;
             }
         }
 
-        return isDeleted;
+        return false;
     }
 
-    public T removeFirstItem() {
-        T removedItem = head.getValue();
+    public T removeFirst() {
+        checkEmptiness();
+
+        T removedValue = head.getValue();
         head = head.getNext();
         size--;
-        return removedItem;
+        return removedValue;
     }
 
     public void reverse() {
-        ListItem<T> p = head;
-        ListItem<T> prev = null;
+        checkEmptiness();
 
-        for (ListItem<T> next = p.getNext(); next != null; prev = p, p = next, next = next.getNext()) {
-            p.setNext(prev);
+        ListItem<T> currentItem = head;
+        ListItem<T> previousItem = null;
+
+        for (ListItem<T> nextItem = currentItem.getNext(); nextItem != null; previousItem = currentItem, currentItem = nextItem, nextItem = nextItem.getNext()) {
+            currentItem.setNext(previousItem);
         }
 
-        p.setNext(prev);
-        head = p;
+        currentItem.setNext(previousItem);
+        head = currentItem;
     }
 
     public List<T> copy() {
@@ -165,15 +129,15 @@ public class List<T> {
             return copy;
         }
 
-        ListItem<T> copyItem = new ListItem<>(head.getValue());
-        ListItem<T> next = head.getNext();
-        copy.head = copyItem;
+        ListItem<T> copyValue = new ListItem<>(head.getValue());
+        ListItem<T> nextItem = head.getNext();
+        copy.head = copyValue;
 
         int i = 1;
-        while (i < getSize()) {
-            copyItem.setNext(new ListItem<>(next.getValue()));
-            next = next.getNext();
-            copyItem = copyItem.getNext();
+        while (i < size) {
+            copyValue.setNext(new ListItem<>(nextItem.getValue()));
+            nextItem = nextItem.getNext();
+            copyValue = copyValue.getNext();
             i++;
         }
 
@@ -182,15 +146,42 @@ public class List<T> {
 
     @Override
     public String toString() {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("{");
-
-        ListItem<T> p = head;
-        for (; p.getNext() != null; p = p.getNext()) {
-            stringBuilder.append(p.getValue().toString()).append(", ");
+        if (size == 0) {
+            return "{}";
         }
 
-        stringBuilder.append(p.getValue().toString()).append("}");
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append('{');
+
+        ListItem<T> currentItem = head;
+        for (; currentItem.getNext() != null; currentItem = currentItem.getNext()) {
+            stringBuilder.append(currentItem.getValue()).append(", ");
+        }
+
+        stringBuilder.append(currentItem.getValue()).append('}');
         return stringBuilder.toString();
+    }
+
+    private void checkIndex(int index) {
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException("Не существует элемента с индексом " + index +
+                    ". Заданный индекс должен быть в пределах от 0 до " + (size - 1));
+        }
+    }
+
+    private ListItem<T> findByIndex(int index) {
+        ListItem<T> item = head;
+
+        for (int i = 0; i < index; i++) {
+            item = item.getNext();
+        }
+
+        return item;
+    }
+
+    private void checkEmptiness() {
+        if (size == 0) {
+            throw new NullPointerException("Список пуст");
+        }
     }
 }
