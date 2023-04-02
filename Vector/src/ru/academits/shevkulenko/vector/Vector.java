@@ -42,11 +42,13 @@ public class Vector {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("{");
 
-        for (int i = 0; i < components.length - 1; i++) {
+        int length = components.length - 1;
+
+        for (int i = 0; i < length; i++) {
             stringBuilder.append(components[i]).append(", ");
         }
 
-        stringBuilder.append(components[components.length - 1]).append("}");
+        stringBuilder.append(components[length]).append("}");
         return stringBuilder.toString();
     }
 
@@ -92,8 +94,8 @@ public class Vector {
 
     public double getComponent(int index) {
         if (index < 0 || index >= components.length) {
-            throw new ArrayIndexOutOfBoundsException("Заданный индекс должен быть в пределах от 0 до " + components.length +
-                    "не включительно, индекс равен " + index);
+            throw new IndexOutOfBoundsException("Заданный индекс должен быть в пределах от 0 до " + (components.length - 1) +
+                    " включительно, индекс равен " + index);
         }
 
         return components[index];
@@ -101,8 +103,8 @@ public class Vector {
 
     public void setComponent(int index, double component) {
         if (index < 0 || index >= components.length) {
-            throw new ArrayIndexOutOfBoundsException("Заданный индекс должен быть в пределах от 0 до " + components.length +
-                    "не включительно, индекс равен " + index);
+            throw new IndexOutOfBoundsException("Заданный индекс должен быть в пределах от 0 до " + (components.length - 1) +
+                    " включительно, индекс равен " + index);
         }
 
         components[index] = component;
@@ -110,7 +112,7 @@ public class Vector {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
+        if (o == this) {
             return true;
         }
 
