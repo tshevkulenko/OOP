@@ -317,7 +317,7 @@ public class ArrayList<T> implements List<T> {
 
     private class newIterator implements Iterator<T> {
         private int currentIndex = -1;
-        private final int modificationsCount = ArrayList.this.modificationsCount;
+        private final int startModificationsCount = modificationsCount;
 
         @Override
         public boolean hasNext() {
@@ -330,7 +330,7 @@ public class ArrayList<T> implements List<T> {
                 throw new NoSuchElementException("Коллекция закончилась");
             }
 
-            if (modificationsCount != ArrayList.this.modificationsCount) {
+            if (startModificationsCount != modificationsCount) {
                 throw new ConcurrentModificationException("Коллекция была изменена");
             }
 
