@@ -40,15 +40,13 @@ public class Vector {
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("{");
+        stringBuilder.append('{');
 
-        int length = components.length - 1;
-
-        for (int i = 0; i < length; i++) {
+        for (int i = 0; i < components.length - 1; i++) {
             stringBuilder.append(components[i]).append(", ");
         }
 
-        stringBuilder.append(components[length]).append("}");
+        stringBuilder.append(components[components.length - 1]).append('}');
         return stringBuilder.toString();
     }
 
