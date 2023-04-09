@@ -42,11 +42,13 @@ public class Vector {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append('{');
 
-        for (int i = 0; i < components.length - 1; i++) {
+        int lastComponentIndex = components.length - 1;
+
+        for (int i = 0; i < lastComponentIndex; i++) {
             stringBuilder.append(components[i]).append(", ");
         }
 
-        stringBuilder.append(components[components.length - 1]).append('}');
+        stringBuilder.append(components[lastComponentIndex]).append('}');
         return stringBuilder.toString();
     }
 
