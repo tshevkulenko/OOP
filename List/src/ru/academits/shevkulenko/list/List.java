@@ -1,5 +1,7 @@
 package ru.academits.shevkulenko.list;
 
+import java.util.NoSuchElementException;
+
 public class List<T> {
     private ListItem<T> head;
     private int size;
@@ -16,18 +18,14 @@ public class List<T> {
     public T getByIndex(int index) {
         checkIndex(index);
 
-        if (index == 0) {
-            return getFirst();
-        }
-
-        ListItem<T> item = findByIndex(index);
+        ListItem<T> item = getItemByIndex(index);
         return item.getValue();
     }
 
     public T setByIndex(int index, T value) {
         checkIndex(index);
 
-        ListItem<T> item = findByIndex(index);
+        ListItem<T> item = getItemByIndex(index);
         T oldValue = item.getValue();
         item.setValue(value);
 
@@ -38,14 +36,11 @@ public class List<T> {
         checkIndex(index);
 
         if (index == 0) {
-            T removedValue = head.getValue();
-            head = head.getNext();
-            size--;
-            return removedValue;
+            removeFirst();
         }
 
-        ListItem<T> previousItem = findByIndex(index - 1);
-        ListItem<T> currentItem = findByIndex(index);
+        ListItem<T> previousItem = getItemByIndex(index - 1);
+        ListItem<T> currentItem = previousItem.getNext();
         T removedValue = currentItem.getValue();
         previousItem.setNext(currentItem.getNext());
         size--;
@@ -63,37 +58,40 @@ public class List<T> {
 
         if (index == 0) {
             addFirst(value);
+            return;
         }
 
-        ListItem<T> currentItem = findByIndex(index);
-        ListItem<T> previousItem = findByIndex(index - 1);
-        ListItem<T> newItem = new ListItem<>(value, currentItem);
-        previousItem.setNext(newItem);
+        ListItem<T> previousItem = getItemByIndex(index - 1);
+        ListItem<T> currentItem = previousItem.getNext();
+        previousItem.setNext(new ListItem<>(value, currentItem));
+
         size++;
     }
 
     public boolean remove(T value) {
-        if (value == null) {
+        if (head == null) {
             return false;
         }
 
-        if (head.equals(value)) {
+        if (head.getValue().equals(value)) {
             head = head.getNext();
             size--;
             return true;
         }
 
-        for (ListItem<T> currentItem = head, previousItem = null; currentItem != null; previousItem = currentItem, currentItem = currentItem.getNext()) {
+        ListItem<T> previousItem = head;
+
+        while (previousItem.getNext() != null) {
+            ListItem<T> currentItem = previousItem.getNext();
+
             if (currentItem.getValue().equals(value)) {
-                currentItem = currentItem.getNext();
-
-                if (previousItem != null) {
-                    previousItem.setNext(currentItem);
-                }
-
+                previousItem.setNext(currentItem.getNext());
                 size--;
+
                 return true;
             }
+
+            previousItem = currentItem;
         }
 
         return false;
@@ -109,7 +107,9 @@ public class List<T> {
     }
 
     public void reverse() {
-        checkEmptiness();
+        if (size == 0) {
+            return;
+        }
 
         ListItem<T> currentItem = head;
         ListItem<T> previousItem = null;
@@ -124,23 +124,20 @@ public class List<T> {
 
     public List<T> copy() {
         List<T> copy = new List<>();
+        copy.size = size;
 
-        if (head == null) {
+        if (size == 0) {
             return copy;
         }
 
-        ListItem<T> copyValue = new ListItem<>(head.getValue());
-        ListItem<T> nextItem = head.getNext();
-        copy.head = copyValue;
+        copy.head = new ListItem<T>(head.getValue());
 
-        int i = 1;
-        while (i < size) {
-            copyValue.setNext(new ListItem<>(nextItem.getValue()));
-            nextItem = nextItem.getNext();
-            copyValue = copyValue.getNext();
-            i++;
+        for (ListItem<T> currentItem = head.getNext(), currentCopyItem = copy.head; currentItem != null; currentItem = currentItem.getNext()) {
+            ListItem<T> newItem = new ListItem<T>(currentItem.getValue());
+            currentCopyItem.setNext(newItem);
+            currentCopyItem = currentCopyItem.getNext();
         }
-
+        
         return copy;
     }
 
@@ -154,6 +151,7 @@ public class List<T> {
         stringBuilder.append('{');
 
         ListItem<T> currentItem = head;
+
         for (; currentItem.getNext() != null; currentItem = currentItem.getNext()) {
             stringBuilder.append(currentItem.getValue()).append(", ");
         }
@@ -169,7 +167,7 @@ public class List<T> {
         }
     }
 
-    private ListItem<T> findByIndex(int index) {
+    private ListItem<T> getItemByIndex(int index) {
         ListItem<T> item = head;
 
         for (int i = 0; i < index; i++) {
@@ -181,7 +179,7 @@ public class List<T> {
 
     private void checkEmptiness() {
         if (size == 0) {
-            throw new NullPointerException("Список пуст");
+            throw new NoSuchElementException("Список пуст");
         }
     }
 }
