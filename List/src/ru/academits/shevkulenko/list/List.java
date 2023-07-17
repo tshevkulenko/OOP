@@ -54,7 +54,9 @@ public class List<T> {
     }
 
     public void addByIndex(int index, T value) {
-        checkIndex(index);
+        if (index < 0 || index > size) {
+            throw new IndexOutOfBoundsException("Заданный индекс должен быть в пределах от 0 до " + (size) + "включительно");
+        }
 
         if (index == 0) {
             addFirst(value);
@@ -73,7 +75,7 @@ public class List<T> {
             return false;
         }
 
-        if (head.getValue().equals(value)) {
+        if (head.getValue() == value) {
             head = head.getNext();
             size--;
             return true;
@@ -84,7 +86,7 @@ public class List<T> {
         while (previousItem.getNext() != null) {
             ListItem<T> currentItem = previousItem.getNext();
 
-            if (currentItem.getValue().equals(value)) {
+            if (currentItem.getValue() == value) {
                 previousItem.setNext(currentItem.getNext());
                 size--;
 
@@ -107,7 +109,7 @@ public class List<T> {
     }
 
     public void reverse() {
-        if (size == 0) {
+        if (size <= 1) {
             return;
         }
 
@@ -124,20 +126,20 @@ public class List<T> {
 
     public List<T> copy() {
         List<T> copy = new List<>();
-        copy.size = size;
 
         if (size == 0) {
             return copy;
         }
 
-        copy.head = new ListItem<T>(head.getValue());
+        copy.size = size;
+        copy.head = new ListItem<>(head.getValue());
 
         for (ListItem<T> currentItem = head.getNext(), currentCopyItem = copy.head; currentItem != null; currentItem = currentItem.getNext()) {
-            ListItem<T> newItem = new ListItem<T>(currentItem.getValue());
-            currentCopyItem.setNext(newItem);
+            //ListItem<T> newItem = new ListItem<>(currentItem.getValue());
+            currentCopyItem.setNext(new ListItem<>(currentItem.getValue()));
             currentCopyItem = currentCopyItem.getNext();
         }
-        
+
         return copy;
     }
 
