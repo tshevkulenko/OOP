@@ -135,7 +135,6 @@ public class List<T> {
         copy.head = new ListItem<>(head.getValue());
 
         for (ListItem<T> currentItem = head.getNext(), currentCopyItem = copy.head; currentItem != null; currentItem = currentItem.getNext()) {
-            //ListItem<T> newItem = new ListItem<>(currentItem.getValue());
             currentCopyItem.setNext(new ListItem<>(currentItem.getValue()));
             currentCopyItem = currentCopyItem.getNext();
         }
