@@ -1,31 +1,31 @@
 package ru.academits.shevkulenko.list;
 
-class ListItem<T> {
-    private T value;
-    private ListItem<T> next;
+class ListItem<E> {
+    private E value;
+    private ListItem<E> next;
 
-    public ListItem(T value) {
+    public ListItem(E value) {
         this.value = value;
     }
 
-    public ListItem(T value, ListItem<T> next) {
+    public ListItem(E value, ListItem<E> next) {
         this.value = value;
         this.next = next;
     }
 
-    public T getValue() {
+    public E getValue() {
         return value;
     }
 
-    public void setValue(T value) {
+    public void setValue(E value) {
         this.value = value;
     }
 
-    public ListItem<T> getNext() {
+    public ListItem<E> getNext() {
         return next;
     }
 
-    public void setNext(ListItem<T> next) {
+    public void setNext(ListItem<E> next) {
         this.next = next;
     }
 }
